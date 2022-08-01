@@ -76,6 +76,7 @@ class MatrixItTest {
         assertThatThrownBy(it::next)
                 .isInstanceOf(NoSuchElementException.class);
     }
+
     @Test
     void whenMultiHashNext() {
         int[][] in = {
