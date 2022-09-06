@@ -8,7 +8,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     private static class Node<E> {
         E item;
         Node<E> next;
-        Node<E> prev;
 
         public Node(E item) {
             this.item = item;
@@ -26,12 +25,10 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
         if (size == 0) {
             newNode.next = null;
-            newNode.prev = null;
             first = newNode;
         } else {
             last.next = newNode;
             newNode.next = null;
-            newNode.prev = last;
         }
         last = newNode;
         size++;
@@ -55,7 +52,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
         return new Iterator<E>() {
             final int expectedModCount = modCount;
-            private int nextIndex;
             private Node<E> lastReturned;
             private Node<E> next = first;
 
@@ -64,7 +60,7 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return nextIndex < size;
+                return next != null;
             }
 
             @Override
@@ -74,7 +70,6 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 }
                 lastReturned = next;
                 next = next.next;
-                nextIndex++;
                 return lastReturned.item;
             }
         };
