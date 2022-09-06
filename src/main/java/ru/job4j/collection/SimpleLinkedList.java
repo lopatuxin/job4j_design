@@ -38,11 +38,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        int count = 0;
         Node<E> tmp = first;
-        while (count < index) {
+        for (int i = 0; i < index; i++) {
             tmp = tmp.next;
-            count++;
         }
         return tmp.item;
     }
