@@ -16,6 +16,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
     private int searchIndex(K key) {
+
         int result = -1;
         for (int i = 0; i < capacity - 1; i++) {
             if (key == null && table[i] != null && table[i].key == null) {
@@ -33,6 +34,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
+
         if (count >= capacity * LOAD_FACTOR) {
             expand();
         }
@@ -67,6 +69,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
+
         MapEntry<K, V>[] temp = new MapEntry[count + 1];
         int index = 0;
         for (int i = 0; i < capacity; i++) {
@@ -81,12 +84,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(K key) {
+
         int index = searchIndex(key);
         return index == -1 ? null : table[index].value;
     }
 
     @Override
     public boolean remove(K key) {
+
         int index = searchIndex(key);
         boolean result = false;
         if (index > -1) {
