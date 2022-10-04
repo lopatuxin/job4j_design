@@ -22,21 +22,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
             expand();
         }
         boolean result = false;
-        if (key == null && table[0] == null) {
-            table[0] = new MapEntry<>(key, value);
+        int i = indexFor(hash(key));
+        if (table[i] == null) {
+            table[i] = new MapEntry<>(key, value);
             count++;
             modCount++;
             result = true;
-        } else if (key != null) {
-            int i = indexFor(hash(key));
-            if (table[i] == null) {
-                table[i] = new MapEntry<>(key, value);
-                count++;
-                modCount++;
-                result = true;
-            } else {
-                result = false;
-            }
         }
         return result;
     }
