@@ -12,6 +12,7 @@ class ConfigTest {
         config.load();
         assertThat(config.value("hibernate.connection.username")).isEqualTo("Anton");
     }
+
     @Test
     void whenTwoKey() {
         String path = "app1.properties";
@@ -19,7 +20,8 @@ class ConfigTest {
         config.load();
         assertThat(config.value("name")).isEqualTo("Anton");
     }
-    @Test ()
+
+    @Test
     void whenException() throws IllegalArgumentException{
         String path = "app2.properties";
         Config config = new Config(path);
