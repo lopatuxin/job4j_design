@@ -22,7 +22,7 @@ class ConfigTest {
     }
 
     @Test
-    void whenException() throws IllegalArgumentException{
+    void whenException() throws IllegalArgumentException {
         String path = "app2.properties";
         Config config = new Config(path);
         assertThatThrownBy(config::load)
