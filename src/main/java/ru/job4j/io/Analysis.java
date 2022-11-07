@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 public class Analysis {
 
     public void unavailable(String source, String target) {
-        try (PrintWriter out = new PrintWriter(new FileOutputStream(target))) {
-            BufferedReader in = new BufferedReader(new FileReader(source));
+        try (PrintWriter out = new PrintWriter(new FileOutputStream(target));
+             BufferedReader in = new BufferedReader(new FileReader(source))) {
             boolean flag = true;
             while (in.ready()) {
                 String line = in.readLine();
