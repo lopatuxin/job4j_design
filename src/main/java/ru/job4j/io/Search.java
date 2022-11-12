@@ -25,8 +25,11 @@ public class Search {
         if (args.length == 0) {
             throw new IllegalArgumentException("Parameters are null");
         }
-        if (Files.exists(Paths.get(args[0]))) {
+        if (!Files.exists(Paths.get(args[0]))) {
             throw new IllegalArgumentException("The value is not in directory");
+        }
+        if (!Files.isDirectory(Paths.get(args[0]))) {
+            throw new IllegalArgumentException("The root is not directory");
         }
         if (args[1].startsWith(".") && args[1].length() > 1) {
             throw new IllegalArgumentException("The value is not an extension");
