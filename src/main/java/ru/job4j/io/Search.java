@@ -25,7 +25,7 @@ public class Search {
         if (args.length == 0) {
             throw new IllegalArgumentException("Parameters are null");
         }
-        if (Files.notExists(Paths.get(args[0]))) {
+        if (Files.exists(Paths.get(args[0]))) {
             throw new IllegalArgumentException("The value is not in directory");
         }
         if (args[1].startsWith(".") && args[1].length() > 1) {
