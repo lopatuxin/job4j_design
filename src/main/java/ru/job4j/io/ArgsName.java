@@ -15,16 +15,17 @@ public class ArgsName {
     }
 
     private void validate(String line) {
+        String[] lines = line.split("=", 2);
         if (!line.startsWith("-")) {
             throw new IllegalArgumentException("The string does not contain -");
         }
         if (!line.contains("=")) {
             throw new IllegalArgumentException("The string does not contain =");
         }
-        if (line.split("=", 2)[0].substring(1).isEmpty()) {
+        if (lines[0].substring(1).isEmpty()) {
             throw new IllegalArgumentException("The string does not contain key");
         }
-        if (line.split("=", 2)[1].isEmpty()) {
+        if (lines[1].isEmpty()) {
             throw new IllegalArgumentException("The string does not contain value");
         }
     }
@@ -35,7 +36,8 @@ public class ArgsName {
         }
         for (String arg : args) {
             validate(arg);
-            values.put(arg.split("=", 2)[0].substring(1), arg.split("=", 2)[1]);
+            String[] lines = arg.split("=", 2);
+            values.put(lines[0].substring(1), lines[1]);
         }
     }
 
