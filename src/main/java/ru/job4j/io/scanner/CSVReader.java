@@ -31,17 +31,7 @@ public class CSVReader {
         return result;
     }
 
-    public static void validate(ArgsName args) {
-        if (!Files.exists(Paths.get(args.get("path")))) {
-            throw new IllegalArgumentException("The value is not in directory");
-        }
-        if (!Files.isDirectory(Paths.get(args.get("path")))) {
-            throw new IllegalArgumentException("The root is not directory");
-        }
-    }
-
     public static void handle(ArgsName argsName) throws Exception {
-        validate(argsName);
         List<String> filt = List.of(argsName.get("filter").split(","));
         List<Integer> result = filter(filt);
         String delimiter = argsName.get("delimiter");
