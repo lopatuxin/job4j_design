@@ -56,7 +56,8 @@ public class CSVReader {
         String value = argsName.get("out");
         if ("stdout".equals(value)) {
             System.out.println(s);
-        } else {
+        }
+        if (value.endsWith(".csv")) {
             out.println(s);
         }
     }
@@ -71,7 +72,9 @@ public class CSVReader {
         if (argsName.get("filter").isBlank()) {
             throw new IllegalArgumentException("Filter doesn't exist");
         }
-
+        if (!";".equals(argsName.get("delimiter"))) {
+            throw new IllegalArgumentException("Wrong delimiter");
+        }
     }
 
     public static void main(String[] args) throws Exception {
