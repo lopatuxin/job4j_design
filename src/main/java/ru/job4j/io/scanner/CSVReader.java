@@ -61,22 +61,25 @@ public class CSVReader {
         }
     }
 
-    public static void validate(String[] args) {
-        if (!Paths.get(args[0]).toFile().exists()) {
+    public static void validate(ArgsName argsName) {
+        if (!Paths.get(argsName.get("path")).toFile().exists()) {
             throw new IllegalArgumentException("The file does not exist");
         }
-        if (args[2] == null) {
+        if (argsName.get("out").isEmpty()) {
             throw new IllegalArgumentException("Out doesn't exist");
         }
-        if (args[3].isBlank()) {
+        if (argsName.get("filter").isBlank()) {
             throw new IllegalArgumentException("Filter doesn't exist");
         }
 
     }
 
     public static void main(String[] args) throws Exception {
-        validate(args);
+        if (args.length != 4) {
+            throw new IllegalArgumentException("args.length != 4");
+        }
         ArgsName argsName = ArgsName.of(args);
+        validate(argsName);
         handle(argsName);
     }
 }
