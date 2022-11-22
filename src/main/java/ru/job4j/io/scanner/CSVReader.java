@@ -4,7 +4,6 @@ import ru.job4j.io.ArgsName;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,5 +59,24 @@ public class CSVReader {
         } else {
             out.println(s);
         }
+    }
+
+    public static void validate(String[] args) {
+        if (!Paths.get(args[0]).toFile().exists()) {
+            throw new IllegalArgumentException("The file does not exist");
+        }
+        if (args[2] == null) {
+            throw new IllegalArgumentException("Out doesn't exist");
+        }
+        if (args[3].isBlank()) {
+            throw new IllegalArgumentException("Filter doesn't exist");
+        }
+
+    }
+
+    public static void main(String[] args) throws Exception {
+        validate(args);
+        ArgsName argsName = ArgsName.of(args);
+        handle(argsName);
     }
 }
