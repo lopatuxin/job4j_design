@@ -56,8 +56,7 @@ public class CSVReader {
         String value = argsName.get("out");
         if ("stdout".equals(value)) {
             System.out.println(s);
-        }
-        if (value.endsWith(".csv")) {
+        } else {
             out.println(s);
         }
     }
@@ -65,9 +64,6 @@ public class CSVReader {
     public static void validate(ArgsName argsName) {
         if (!Paths.get(argsName.get("path")).toFile().exists()) {
             throw new IllegalArgumentException("The file does not exist");
-        }
-        if (argsName.get("out").isEmpty()) {
-            throw new IllegalArgumentException("Out doesn't exist");
         }
         if (argsName.get("filter").isBlank()) {
             throw new IllegalArgumentException("Filter doesn't exist");
