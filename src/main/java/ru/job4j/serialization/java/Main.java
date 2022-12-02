@@ -3,26 +3,31 @@ package ru.job4j.serialization.java;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class Main {
-    public static void main(String[] args) {
-        final Animal animal = new Animal(true, "Tiger",
-                100, new String[] {"Tiger", "Cat"}, new Cat("Tor"));
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(animal));
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+import java.io.StringReader;
+import java.io.StringWriter;
 
-        final String animalString =
-                "{"
-                + "\"predator\":true,"
-                + "\"name\":Cat,"
-                + "\"weight\":10,"
-                + "\"animals\":"
-                + "[\"Tiger\",\"Cat\"],"
-                + "\"cat\":"
-                + "{"
-                + "\"name\":\"Tor\""
-                + "}"
-                + "}";
-        final Animal animalMod = gson.fromJson(animalString, Animal.class);
-        System.out.println(animalMod);
+public class Main {
+    public static void main(String[] args) throws Exception {
+
+        Car car = new Car("green", 2020, false,
+                new Brand("Toyota"), new String[]{"Anton", "Elena"});
+
+        JAXBContext context = JAXBContext.newInstance(Car.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "car.xml";
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(car, writer);
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        }
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            Car result = (Car) unmarshaller.unmarshal(reader);
+            System.out.println(result);
+        }
     }
 }
