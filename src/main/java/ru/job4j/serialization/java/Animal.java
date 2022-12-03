@@ -19,6 +19,18 @@ public class Animal {
         this.cat = cat;
     }
 
+    public boolean isPredator() {
+        return predator;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
     @Override
     public String toString() {
         return "Animal{"

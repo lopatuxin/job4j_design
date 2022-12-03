@@ -1,33 +1,27 @@
 package ru.job4j.serialization.java;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
-import java.io.StringReader;
-import java.io.StringWriter;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) throws Exception {
+        JSONObject jsonCat = new JSONObject("{\"name\":\"Tor\"}");
+        List<String> list = new ArrayList<>();
+        list.add("Tiger");
+        list.add("Cat");
+        JSONArray jsonAnimals = new JSONArray(list);
+        final Animal animal = new Animal(true, "Tiger",
+                100, new String[] {"Tiger", "Cat"}, new Cat("Tor"));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("predator", animal.isPredator());
+        jsonObject.put("name", animal.getName());
+        jsonObject.put("weight", animal.getWeight());
+        jsonObject.put("animals", jsonAnimals);
+        jsonObject.put("cat", jsonCat);
 
-        Car car = new Car("green", 2020, false,
-                new Brand("Toyota"), new String[]{"Anton", "Elena"});
-
-        JAXBContext context = JAXBContext.newInstance(Car.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        String xml = "car.xml";
-        try (StringWriter writer = new StringWriter()) {
-            marshaller.marshal(car, writer);
-            xml = writer.getBuffer().toString();
-            System.out.println(xml);
-        }
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        try (StringReader reader = new StringReader(xml)) {
-            Car result = (Car) unmarshaller.unmarshal(reader);
-            System.out.println(result);
-        }
+        System.out.println(jsonObject.toString());
+        System.out.println(new JSONObject(animal).toString());
     }
 }
