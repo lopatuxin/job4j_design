@@ -31,6 +31,14 @@ public class Animal {
         return weight;
     }
 
+    public String[] getAnimals() {
+        return animals;
+    }
+
+    public Cat getCat() {
+        return cat;
+    }
+
     @Override
     public String toString() {
         return "Animal{"
