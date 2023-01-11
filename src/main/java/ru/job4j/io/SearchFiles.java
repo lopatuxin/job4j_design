@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-import static java.nio.file.FileVisitResult.CONTINUE;
-
 public class SearchFiles extends SimpleFileVisitor<Path> {
 
     private final Predicate<Path> condition;
@@ -20,15 +18,30 @@ public class SearchFiles extends SimpleFileVisitor<Path> {
         this.condition = condition;
     }
 
-    public List<Path> getPaths() {
-        return paths;
+    @Override
+    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
+        return FileVisitResult.CONTINUE;
     }
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         if (condition.test(file)) {
-            paths.add(file.toAbsolutePath());
+            paths.add(file);
         }
-        return CONTINUE;
+        return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        return FileVisitResult.CONTINUE;
+    }
+
+    @Override
+    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+        return FileVisitResult.CONTINUE;
+    }
+
+    public List<Path> getPaths() {
+        return paths;
     }
 }
